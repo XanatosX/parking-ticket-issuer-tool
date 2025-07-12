@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
 using Avalonia;
@@ -19,7 +20,12 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly SettingsService settingsService;
 
     [ObservableProperty]
+    [Required(ErrorMessage = "Logo path is required.")]
+    [CustomValidation(typeof(SettingsViewModel), nameof(ValidateImage))]
+    [NotifyCanExecuteChangedFor(nameof(SaveSettingsCommand))]
     private string logoPath;
+
+    private bool isLogoValid;
 
     public SettingsViewModel(SettingsService settingsService)
     {
@@ -27,7 +33,7 @@ public partial class SettingsViewModel : ViewModelBase
         this.settingsService = settingsService;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSaveSettings))]
     private void SaveSettings()
     {
         settingsService.UpdateSettings(settings =>
@@ -36,6 +42,11 @@ public partial class SettingsViewModel : ViewModelBase
         });
 
         WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(settingsService.GetSettings()));
+    }
+
+    private bool CanSaveSettings()
+    {
+        return !string.IsNullOrWhiteSpace(LogoPath) && isLogoValid;
     }
 
     [RelayCommand]
@@ -57,14 +68,11 @@ public partial class SettingsViewModel : ViewModelBase
         if (files.Count > 0)
         {
             var file = files[0];
-            if (ValidateImage(file))
-            {
-                LogoPath = file;
-            }
+            LogoPath = file;
         }
     }
 
-    private bool ValidateImage(string path)
+    public static ValidationResult ValidateImage(string path, ValidationContext context)
     {
         Bitmap? bitmap = null;
         using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -76,10 +84,18 @@ public partial class SettingsViewModel : ViewModelBase
             catch (Exception)
             {
                 // Handle exceptions related to invalid image formats
-                return false;
+                return new("Could not load image. Please select a valid image file.");
             }
         }
-
-        return bitmap.Size.Width == bitmap.Size.Height && bitmap.Size.Width <= 250;
+        var isValid = bitmap.Size.Width == bitmap.Size.Height && bitmap.Size.Width <= 250;
+        if (context.ObjectInstance is SettingsViewModel viewModel)
+        {
+            viewModel.isLogoValid = false;
+            if (isValid )
+            {
+                viewModel.isLogoValid = true;
+            }
+        }
+        return isValid ? ValidationResult.Success : new("Logo must be a square image with a maximum size of 250x250 pixels.");
     }
 }
