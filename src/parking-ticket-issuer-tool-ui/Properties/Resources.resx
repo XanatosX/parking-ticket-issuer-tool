@@ -121,4 +121,12 @@
     <value>Parking Ticket Issuer Tool</value>
     <comment/>
   </data>
+  <data name="Setting_Logo_Path" xml:space="preserve">
+    <value>Logo path:</value>
+    <comment/>
+  </data>
+  <data name="Setting_Logo_Path_Selection_Tooltip" xml:space="preserve">
+    <value>Select the file containing the logo to use</value>
+    <comment/>
+  </data>
 </root>

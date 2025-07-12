@@ -6,6 +6,9 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using ParkingTicketIssuerToolUI.ViewModels;
 using ParkingTicketIssuerToolUI.Views;
+using Microsoft.Extensions.DependencyInjection;
+using ParkingTicketIssuerToolFramework;
+using Microsoft.VisualBasic;
 
 namespace ParkingTicketIssuerToolUI;
 
@@ -16,8 +19,15 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
+    private IServiceCollection BuildServiceCollection()
+    {
+        IServiceCollection collection = new ServiceCollection();
+        return collection.AddServices().AddViews().RegisterFramework().AddLogging();
+    }
+
     public override void OnFrameworkInitializationCompleted()
     {
+        var provider = BuildServiceCollection().BuildServiceProvider();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -25,7 +35,7 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = provider.GetRequiredService<MainWindowViewModel>()
             };
         }
 

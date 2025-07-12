@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ParkingTicketIssuerToolUI.ViewModels"
+             xmlns:p="clr-namespace:ParkingTicketIssuerToolUI.Properties"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:SettingsViewModel"
+             x:Class="ParkingTicketIssuerToolUI.Views.SettingsView">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RowDefinitions="*, Auto">
+      <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+          <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <!-- Logo Path-->
+          <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Resources.Setting_Logo_Path}" HorizontalAlignment="Right"/>
+          <DockPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
+            <Button Content="..." ToolTip.Tip="{x:Static p:Resources.Setting_Logo_Path_Selection_Tooltip}" DockPanel.Dock="Right" IsEnabled="false"/>
+            <TextBox Watermark="Path to the logo file" Text="{Binding LogoPath}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
+          </DockPanel>
+
+          <!-- Setting 2
+          <Label Grid.Row="1" Grid.Column="0" Content="Setting 2" HorizontalAlignment="Right"/>
+          <TextBox Grid.Row="1" Grid.Column="1" Text="Value 2" Margin="10,0,0,0"/>
+  -->
+          <!-- Setting 3 
+          <Label Grid.Row="2" Grid.Column="0" Content="Setting 3" HorizontalAlignment="Right"/>
+          <TextBox Grid.Row="2" Grid.Column="1" Text="Value 3" Margin="10,0,0,0"/>
+          -->
+      </Grid>
+      <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <Button Content="Save Settings" Margin="10" Command="{Binding SaveSettingsCommand}"/>
+      </StackPanel>
+    </Grid>
+</UserControl>
