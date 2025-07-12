@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
@@ -8,7 +7,8 @@ using ParkingTicketIssuerToolUI.ViewModels;
 using ParkingTicketIssuerToolUI.Views;
 using Microsoft.Extensions.DependencyInjection;
 using ParkingTicketIssuerToolFramework;
-using Microsoft.VisualBasic;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace ParkingTicketIssuerToolUI;
 
@@ -22,7 +22,10 @@ public partial class App : Application
     private IServiceCollection BuildServiceCollection()
     {
         IServiceCollection collection = new ServiceCollection();
-        return collection.AddServices().AddViews().RegisterFramework().AddLogging();
+        return collection.AddServices()
+                         .AddViews()
+                         .RegisterFramework()
+                         .AddSingleton<ILogger>(NullLogger.Instance);
     }
 
     public override void OnFrameworkInitializationCompleted()

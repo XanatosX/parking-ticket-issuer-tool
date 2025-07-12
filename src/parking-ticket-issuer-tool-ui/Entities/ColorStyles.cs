@@ -12,10 +12,10 @@ public class ColorStyles
 
     public ColorStyles()
     {
-        ButtonSelectedColor = new SolidColorBrush(Colors.DarkBlue);
+        ButtonSelectedColor = new SolidColorBrush(Colors.BlueViolet);
         ButtonBackgroundColor = new SolidColorBrush(Colors.DarkGray);
         ButtonSelectedFontColor = new SolidColorBrush(Colors.White);
-        ButtonBackgroundFontColor = new SolidColorBrush(Colors.White);
+        ButtonBackgroundFontColor = new SolidColorBrush(Colors.Black);
     }
 
 }

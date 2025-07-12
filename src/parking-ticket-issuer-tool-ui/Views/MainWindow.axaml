@@ -8,7 +8,7 @@
         x:Class="ParkingTicketIssuerToolUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ParkingTicketIssuerToolUI">
+        Title="{x:Static p:Resources.App_Name}">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,

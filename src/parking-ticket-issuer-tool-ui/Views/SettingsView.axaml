@@ -23,7 +23,7 @@
           <!-- Logo Path-->
           <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Resources.Setting_Logo_Path}" HorizontalAlignment="Right"/>
           <DockPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
-            <Button Content="..." ToolTip.Tip="{x:Static p:Resources.Setting_Logo_Path_Selection_Tooltip}" DockPanel.Dock="Right" IsEnabled="false"/>
+            <Button Content="..." ToolTip.Tip="{x:Static p:Resources.Setting_Logo_Path_Selection_Tooltip}" DockPanel.Dock="Right" Command="{Binding OpenLogoFileCommand}" />
             <TextBox Watermark="Path to the logo file" Text="{Binding LogoPath}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
           </DockPanel>
 

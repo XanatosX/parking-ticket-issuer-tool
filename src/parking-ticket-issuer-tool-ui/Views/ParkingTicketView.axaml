@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:p="clr-namespace:ParkingTicketIssuerToolUI.Properties"
+             xmlns:vm="using:ParkingTicketIssuerToolUI.ViewModels"
+             x:DataType="vm:ParkingTicketViewModel"
+             x:Class="ParkingTicketIssuerToolUI.Views.ParkingTicketView">
+      <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RowDefinitions="*, Auto">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+          <!-- Issuer -->
+          <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Resources.Issuer}" HorizontalAlignment="Left"/>
+          <AutoCompleteBox Grid.Row="1" Grid.Column="1" Text="{Binding IssuingOfficerName}" Watermark="{x:Static p:Resources.Issuer_Watermark}" Margin="10,0,0,0" ItemsSource="{Binding IssuingOfficers}"/>
+
+          <!-- Driver -->
+          <Label Grid.Row="2" Grid.Column="0" Content="{x:Static p:Resources.Driver}" HorizontalAlignment="Left"/>
+          <AutoCompleteBox Grid.Row="2" Grid.Column="1" Text="{Binding DriverName}"  Watermark="{x:Static p:Resources.Driver_Watermark}" Margin="10,0,0,0" ItemsSource="{Binding DriverNames}"/>
+
+          <!-- Vehicle -->
+          <Label Grid.Row="3" Grid.Column="0" Content="{x:Static p:Resources.Used_Vehicle_Name}" HorizontalAlignment="Left"/>
+          <AutoCompleteBox Grid.Row="3" Grid.Column="1" Text="{Binding UsedVehicleName}"  Watermark="{x:Static p:Resources.Used_Vehicle_Name_Watermark}" Margin="10,0,0,0" ItemsSource="{Binding VehicleNames}"/>
+
+          <!-- Location -->
+          <Label Grid.Row="4" Grid.Column="0" Content="{x:Static p:Resources.Location}" HorizontalAlignment="Left"/>
+          <AutoCompleteBox Grid.Row="4" Grid.Column="1" Text="{Binding Location}"  Watermark="{x:Static p:Resources.Location_Watermark}" Margin="10,0,0,0" ItemsSource="{Binding Locations}"/>
+
+          <!-- Sentence -->
+          <Label Grid.Row="5" Grid.Column="0" Content="{x:Static p:Resources.Sentence}" HorizontalAlignment="Left"/>
+          <AutoCompleteBox Grid.Row="5" Grid.Column="1" Text="{Binding Sentence}"  Watermark="{x:Static p:Resources.Sentence_Watermark}" Margin="10,0,0,0" ItemsSource="{Binding PossibleSentences}"/>
+
+          <!-- Evidence Path -->
+          <Label Grid.Row="6" Grid.Column="0" Content="{x:Static p:Resources.Evidence_Path}" HorizontalAlignment="Left"/>
+          <DockPanel Grid.Row="6" Grid.Column="1" HorizontalAlignment="Stretch">
+            <Button Content="..." DockPanel.Dock="Right" Command="{Binding SelectEvidenceFileCommand}"/>
+            <TextBox Text="{Binding EvidencePath}"  Watermark="{x:Static p:Resources.Evidence_Path_Watermark}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
+          </DockPanel>
+
+          <!-- Additional Information -->
+          <Label Grid.Row="7" Grid.ColumnSpan="2" Content="{x:Static p:Resources.Additional_Information}" HorizontalAlignment="Left"/>
+          <TextBox Grid.Row="8" AcceptsReturn="True" TextWrapping="Wrap" Grid.ColumnSpan="2" Text="{Binding AdditionalInformation}" Watermark="{x:Static p:Resources.Additional_Information_Watermark}"/>
+
+        </Grid>
+      <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <Button Content="Issue Ticket" Margin="10" Command="{Binding CreateTicketCommand}"/>
+      </StackPanel>
+    </Grid>
+</UserControl>

@@ -6,6 +6,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddViews(this IServiceCollection services)
     {
-        return services.AddTransient<MainWindowViewModel>();
+        return services.AddTransient<MainWindowViewModel>()
+                       .AddTransient<SettingsViewModel>()
+                       .AddTransient<ParkingTicketViewModel>();
     }
 }

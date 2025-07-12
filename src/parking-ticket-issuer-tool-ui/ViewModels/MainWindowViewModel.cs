@@ -38,19 +38,19 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel(ILocatorService locatorService, SettingsService settingsService)
     {
+        this.locatorService = locatorService;
+        this.settingsService = settingsService;
+
         var settings = settingsService.GetSettings();
         FeaturesActive = ValidateSettings(settings);
 
-        //Load parking ticket tool
+        ResetColors();
+
+        ChangeMainView("ParkingTicketView");
         if (!featuresActive)
         {
-            CurrentMainViewModel = locatorService.GetService<SettingsViewModel>();
+            ChangeMainView("SettingsView");
         }
-        parkingTicketForeground = ColorStyles.ButtonBackgroundFontColor;
-        parkingTicketBackground = ColorStyles.ButtonBackgroundColor;
-        settingsForeground = ColorStyles.ButtonBackgroundFontColor;
-        settingsBackground = ColorStyles.ButtonBackgroundColor;
-
         WeakReferenceMessenger.Default.Register<SettingsChangedMessage>(this, (r, m) =>
         {
             var settings = m.Value;
@@ -62,8 +62,15 @@ public partial class MainWindowViewModel : ViewModelBase
                 }
             }
         });
-        this.locatorService = locatorService;
-        this.settingsService = settingsService;
+    }
+
+    private void ResetColors()
+    {
+        ParkingTicketForeground = ColorStyles.ButtonBackgroundFontColor;
+        ParkingTicketBackground = ColorStyles.ButtonBackgroundColor;
+
+        SettingsForeground = ColorStyles.ButtonBackgroundFontColor;
+        SettingsBackground = ColorStyles.ButtonBackgroundColor;
     }
 
     private bool ValidateSettings(ApplicationSettings settings)
@@ -77,8 +84,15 @@ public partial class MainWindowViewModel : ViewModelBase
         switch (viewName)
         {
             case "ParkingTicketView":
+                ResetColors();
+                ParkingTicketBackground = ColorStyles.ButtonSelectedColor;
+                ParkingTicketForeground = ColorStyles.ButtonSelectedFontColor;
+                CurrentMainViewModel = locatorService.GetService<ParkingTicketViewModel>();
                 break;
             case "SettingsView":
+                ResetColors();
+                SettingsBackground = ColorStyles.ButtonSelectedColor;
+                SettingsForeground = ColorStyles.ButtonSelectedFontColor;
                 CurrentMainViewModel = locatorService.GetService<SettingsViewModel>();
                 break;
         }
