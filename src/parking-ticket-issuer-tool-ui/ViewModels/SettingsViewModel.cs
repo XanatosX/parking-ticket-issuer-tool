@@ -27,6 +27,15 @@ public partial class SettingsViewModel : ViewModelBase
 
     private bool isLogoValid;
 
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ClearAllCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ClearOfficerNamesCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ClearDriverNamesCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ClearLocationsCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ClearSentencesCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ClearVehicleNamesCommand))]
+    private bool updateClearButtons = true;
+
     public SettingsViewModel(SettingsService settingsService)
     {
         LogoPath = settingsService.GetSettings().LogoPath;
@@ -47,6 +56,120 @@ public partial class SettingsViewModel : ViewModelBase
     private bool CanSaveSettings()
     {
         return !string.IsNullOrWhiteSpace(LogoPath) && isLogoValid;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanClearAll))]
+    private void ClearAll()
+    {
+        settingsService.UpdateSettings(settings =>
+        {
+            settings.IssuingOfficers.Clear();
+            settings.LastUsedOfficerName = string.Empty;
+            settings.Locations.Clear();
+            settings.Sentences.Clear();
+            settings.VehicleNames.Clear();
+        });
+        UpdateClearButtons = !UpdateClearButtons;
+    }
+
+    private bool CanClearAll()
+    {
+        return CanClearDriverNames() ||
+               CanClearLocations() ||
+               CanClearSentences() ||
+               CanClearVehicleNames() ||
+               CanClearOfficerNames();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanClearOfficerNames))]
+    private void ClearOfficerNames()
+    {
+        settingsService.UpdateSettings(settings =>
+        {
+            settings.IssuingOfficers.Clear();
+            settings.LastUsedOfficerName = string.Empty;
+        });
+
+        WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(settingsService.GetSettings()));
+        UpdateClearButtons = !UpdateClearButtons;
+    }
+
+    private bool CanClearOfficerNames()
+    {
+        var settings = settingsService.GetSettings();
+        return settings.IssuingOfficers.Count > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanClearDriverNames))]
+    private void ClearDriverNames()
+    {
+        settingsService.UpdateSettings(settings =>
+        {
+            settings.DriverNames.Clear();
+        });
+
+        WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(settingsService.GetSettings()));
+        UpdateClearButtons = !UpdateClearButtons;
+    }
+
+    private bool CanClearDriverNames()
+    {
+        var settings = settingsService.GetSettings();
+        return settings.DriverNames.Count > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanClearLocations))]
+    private void ClearLocations()
+    {
+        settingsService.UpdateSettings(settings =>
+        {
+            settings.Locations.Clear();
+        });
+
+        WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(settingsService.GetSettings()));
+        UpdateClearButtons = !UpdateClearButtons;
+    }
+
+    private bool CanClearLocations()
+    {
+        var settings = settingsService.GetSettings();
+        return settings.Locations.Count > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanClearSentences))]
+    private void ClearSentences()
+    {
+        settingsService.UpdateSettings(settings =>
+        {
+            settings.Sentences.Clear();
+        });
+
+        WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(settingsService.GetSettings()));
+        UpdateClearButtons = !UpdateClearButtons;
+    }
+
+    private bool CanClearSentences()
+    {
+        var settings = settingsService.GetSettings();
+        return settings.Sentences.Count > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanClearVehicleNames))]
+    private void ClearVehicleNames()
+    {
+        settingsService.UpdateSettings(settings =>
+        {
+            settings.VehicleNames.Clear();
+        });
+
+        WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(settingsService.GetSettings()));
+        UpdateClearButtons = !UpdateClearButtons;
+    }
+
+    private bool CanClearVehicleNames()
+    {
+        var settings = settingsService.GetSettings();
+        return settings.VehicleNames.Count > 0;
     }
 
     [RelayCommand]

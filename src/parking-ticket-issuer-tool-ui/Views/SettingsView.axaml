@@ -14,6 +14,7 @@
               <RowDefinition Height="Auto"/>
               <RowDefinition Height="Auto"/>
               <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
@@ -35,6 +36,21 @@
           <Label Grid.Row="2" Grid.Column="0" Content="Setting 3" HorizontalAlignment="Right"/>
           <TextBox Grid.Row="2" Grid.Column="1" Text="Value 3" Margin="10,0,0,0"/>
           -->
+
+          <Expander Grid.Row="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,5,0,0">
+            <Expander.Header>
+              <TextBlock Text="{x:Static p:Resources.Setting_Clear_Data_Expander}" FontWeight="Bold"/>
+            </Expander.Header>
+            <StackPanel Orientation="Vertical" Spacing="5">
+              <TextBlock Text="{x:Static p:Resources.Setting_Clear_Data_Description}" Margin="0,5,0,20"/>
+              <Button Content="{x:Static p:Resources.Setting_Clear_All}" ToolTip.Tip="{x:Static p:Resources.Setting_Clear_All_Tooltip}" Command="{Binding ClearAllCommand}"/>
+              <Button Content="{x:Static p:Resources.Setting_Clear_Officer_Names}" Command="{Binding ClearOfficerNamesCommand}"/>
+              <Button Content="{x:Static p:Resources.Setting_Clear_Driver_Names}" Command="{Binding ClearDriverNamesCommand}"/>
+              <Button Content="{x:Static p:Resources.Setting_Clear_Locations}" Command="{Binding ClearLocationsCommand}"/>
+              <Button Content="{x:Static p:Resources.Setting_Clear_Sentences}" Command="{Binding ClearSentencesCommand}"/>
+              <Button Content="{x:Static p:Resources.Setting_Clear_Vehicle_Names}" Command="{Binding ClearVehicleNamesCommand}"/>
+            </StackPanel>
+          </Expander>
       </Grid>
       <StackPanel Grid.Row="1" Orientation="Horizontal">
         <Button Content="Save Settings" Margin="10" Command="{Binding SaveSettingsCommand}"/>
