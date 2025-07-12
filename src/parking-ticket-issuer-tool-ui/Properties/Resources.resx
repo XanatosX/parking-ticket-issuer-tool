@@ -121,4 +121,68 @@
     <value>Parking Ticket Issuer Tool</value>
     <comment/>
   </data>
+  <data name="Setting_Logo_Path" xml:space="preserve">
+    <value>Logo path:</value>
+    <comment/>
+  </data>
+  <data name="Setting_Logo_Path_Selection_Tooltip" xml:space="preserve">
+    <value>Select the file containing the logo to use</value>
+    <comment/>
+  </data>
+  <data name="Issuer" xml:space="preserve">
+    <value>Issuer*:</value>
+    <comment/>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Driver*:</value>
+    <comment/>
+  </data>
+  <data name="Sentence" xml:space="preserve">
+    <value>Sentence*:</value>
+    <comment/>
+  </data>
+  <data name="Evidence_Path" xml:space="preserve">
+    <value>Evidence Path*:</value>
+    <comment/>
+  </data>
+  <data name="Used_Vehicle_Name" xml:space="preserve">
+    <value>Vehicle Name:</value>
+    <comment/>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location:</value>
+    <comment/>
+  </data>
+  <data name="Additional_Information" xml:space="preserve">
+    <value>Additional Information</value>
+    <comment/>
+  </data>
+  <data name="Issuer_Watermark" xml:space="preserve">
+    <value>The person creating the parking ticket</value>
+    <comment/>
+  </data>
+  <data name="Driver_Watermark" xml:space="preserve">
+    <value>The person which is affected by that parking ticket</value>
+    <comment/>
+  </data>
+  <data name="Sentence_Watermark" xml:space="preserve">
+    <value>The sentence this person need's to do to get back into favor</value>
+    <comment/>
+  </data>
+  <data name="Evidence_Path_Watermark" xml:space="preserve">
+    <value>The path to an evidence photo</value>
+    <comment/>
+  </data>
+  <data name="Used_Vehicle_Name_Watermark" xml:space="preserve">
+    <value>The vehicle which was parked wrongly</value>
+    <comment/>
+  </data>
+  <data name="Location_Watermark" xml:space="preserve">
+    <value>The location where the vehicle was found</value>
+    <comment/>
+  </data>
+  <data name="Additional_Information_Watermark" xml:space="preserve">
+    <value>Any additional information about the incident</value>
+    <comment/>
+  </data>
 </root>

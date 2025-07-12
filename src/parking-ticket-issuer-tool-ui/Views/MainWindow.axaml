@@ -8,7 +8,7 @@
         x:Class="ParkingTicketIssuerToolUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ParkingTicketIssuerToolUI">
+        Title="{x:Static p:Resources.App_Name}">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -16,6 +16,33 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid ColumnDefinitions="250, *">
+        <StackPanel Grid.Column="0" Spacing="10">
+            <Button Width="{Binding ButtonWidth}" Height="{Binding ButtonHeight}"
+            Content="Parking Ticket"
+            Foreground="{Binding ParkingTicketForeground}"
+            Background="{Binding ParkingTicketBackground}"
+            Command="{Binding ChangeMainViewCommand}"
+            CommandParameter="ParkingTicketView"
+            IsEnabled="{Binding FeaturesActive}"
+            />
+            <Button Width="{Binding ButtonWidth}" Height="{Binding ButtonHeight}"
+            Content="Settings"
+            Foreground="{Binding SettingsForeground}"
+            Background="{Binding SettingsBackground}"
+            Command="{Binding ChangeMainViewCommand}"
+            CommandParameter="SettingsView"
+            />
+        </StackPanel>
+        <DockPanel  Grid.Column="1" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <ContentControl
+                Content="{Binding CurrentMainViewModel}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="10"/>
+        </DockPanel>
+    </Grid>
 
 </Window>
