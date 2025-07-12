@@ -35,7 +35,7 @@ public partial class App : Application
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
+            //DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
                 DataContext = provider.GetRequiredService<MainWindowViewModel>()
@@ -45,6 +45,7 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
+    /**
     private void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove
@@ -57,4 +58,5 @@ public partial class App : Application
             BindingPlugins.DataValidators.Remove(plugin);
         }
     }
+    */
 }

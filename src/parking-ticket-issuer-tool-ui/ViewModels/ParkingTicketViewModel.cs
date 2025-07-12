@@ -20,22 +20,25 @@ public partial class ParkingTicketViewModel : ViewModelBase
     private readonly SettingsService settingsService;
     [ObservableProperty]
     [Required(ErrorMessage = "Issuing officer name is required.")]
+    [MinLength(3, ErrorMessage = "Issuing officer name must be at least 3 characters long.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
     private string issuingOfficerName;
 
     [ObservableProperty]
     [Required(ErrorMessage = "Driver name is required.")]
+    [MinLength(3, ErrorMessage = "Driver name must be at least 3 characters long.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
     private string driverName;
 
     [ObservableProperty]
     
-    [Required(ErrorMessage = "Driver name is required.")]
+    [Required(ErrorMessage = "Sentence is required.")]
+    [MaxLength(100, ErrorMessage = "Sentence must be at most 100 characters long.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
     private string sentence;
 
     [ObservableProperty]
-    [Required(ErrorMessage = "Driver name is required.")]
+    [Required(ErrorMessage = "Evidence file is required.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
     private string evidencePath;
 

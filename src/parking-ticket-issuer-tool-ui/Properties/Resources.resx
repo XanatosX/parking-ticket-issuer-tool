@@ -185,4 +185,40 @@
     <value>Any additional information about the incident</value>
     <comment/>
   </data>
+  <data name="Setting_Clear_Locations" xml:space="preserve">
+    <value>Clear stored locations</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_Sentences" xml:space="preserve">
+    <value>Clear stored sentences</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_Driver_Names" xml:space="preserve">
+    <value>Clear stored driver names</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_Officer_Names" xml:space="preserve">
+    <value>Clear stored officer names</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_Vehicle_Names" xml:space="preserve">
+    <value>Clear stored vehicle names</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_All" xml:space="preserve">
+    <value>Clear all the data</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_All_Tooltip" xml:space="preserve">
+    <value>Clear the locations, sentences, driver names, officer names and vehicle names</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_Data_Description" xml:space="preserve">
+    <value>Those buttons do allow you to delete the autocomplete suggestion for the given areas of the tool. Keep in mind that there is popup for confirmation.</value>
+    <comment/>
+  </data>
+  <data name="Setting_Clear_Data_Expander" xml:space="preserve">
+    <value>DANGER ZONE: Delete autocomplete suggestions</value>
+    <comment/>
+  </data>
 </root>
