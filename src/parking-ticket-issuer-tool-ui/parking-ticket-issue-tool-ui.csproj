@@ -14,6 +14,7 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
+
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.2" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.2" />
@@ -27,7 +28,58 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
   </ItemGroup>
 
+  
   <ItemGroup>
     <ProjectReference Include="..\parking-ticket-issuer-tool-framework\parking-ticket-issuer-model-framework.csproj" />
   </ItemGroup>
+
+
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>MSBuild:Compile</Generator>
+      <PublicClass>true</PublicClass>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <StronglyTypedFileName>$(IntermediateOutputPath)\Resources.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>ParkingTicketIssuerToolUI.Properties</StronglyTypedNamespace>
+      <StronglyTypedClassName>Resources</StronglyTypedClassName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Properties.resx">
+      <Generator>MSBuild:Compile</Generator>
+      <PublicClass>true</PublicClass>
+      <LastGenOutput>Properties.Designer.cs</LastGenOutput>
+      <StronglyTypedFileName>$(IntermediateOutputPath)\Properties.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>ParkingTicketIssuerToolUI.Properties</StronglyTypedNamespace>
+      <StronglyTypedClassName>Properties</StronglyTypedClassName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Properties.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Properties.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+    <ItemGroup>
+    <EmbeddedResource Update="Properties\Properties.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Properties.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
