@@ -17,23 +17,30 @@
     </Design.DataContext>
 
     <Grid ColumnDefinitions="250, *">
-        <StackPanel Grid.Column="0" Spacing="10">
-            <Button Width="{Binding ButtonWidth}" Height="{Binding ButtonHeight}"
-            Content="Parking Ticket"
-            Foreground="{Binding ParkingTicketForeground}"
-            Background="{Binding ParkingTicketBackground}"
-            Command="{Binding ChangeMainViewCommand}"
-            CommandParameter="ParkingTicketView"
-            IsEnabled="{Binding FeaturesActive}"
-            />
-            <Button Width="{Binding ButtonWidth}" Height="{Binding ButtonHeight}"
-            Content="Settings"
-            Foreground="{Binding SettingsForeground}"
-            Background="{Binding SettingsBackground}"
-            Command="{Binding ChangeMainViewCommand}"
-            CommandParameter="SettingsView"
-            />
-        </StackPanel>
+        <Grid RowDefinitions="*, 50">
+            <StackPanel Grid.Column="0" Spacing="10">
+                <Button Width="{Binding ButtonWidth}" Height="{Binding ButtonHeight}"
+                Content="{x:Static p:Resources.MainView_ParkingTicket}"
+                Foreground="{Binding ParkingTicketForeground}"
+                Background="{Binding ParkingTicketBackground}"
+                Command="{Binding ChangeMainViewCommand}"
+                CommandParameter="ParkingTicketView"
+                IsEnabled="{Binding FeaturesActive}"
+                />
+                <Button Width="{Binding ButtonWidth}" Height="{Binding ButtonHeight}"
+                Content="{x:Static p:Resources.MainView_Settings}"
+                Foreground="{Binding SettingsForeground}"
+                Background="{Binding SettingsBackground}"
+                Command="{Binding ChangeMainViewCommand}"
+                CommandParameter="SettingsView"
+                />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="3" Orientation="Horizontal" Margin="5,0,5,5">
+                <TextBlock Grid.Row="1" Text="{x:Static p:Resources.MainView_Version}" VerticalAlignment="Bottom" />
+                <TextBlock Grid.Row="1" Text="{Binding ApplicationVersion}" VerticalAlignment="Bottom" />
+            </StackPanel>
+        </Grid>
+
         <DockPanel  Grid.Column="1" 
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">

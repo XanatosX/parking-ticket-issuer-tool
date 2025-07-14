@@ -221,4 +221,16 @@
     <value>DANGER ZONE: Delete autocomplete suggestions</value>
     <comment/>
   </data>
+  <data name="MainView_ParkingTicket" xml:space="preserve">
+    <value>Parking Ticket</value>
+    <comment/>
+  </data>
+  <data name="MainView_Settings" xml:space="preserve">
+    <value>Settings</value>
+    <comment/>
+  </data>
+  <data name="MainView_Version" xml:space="preserve">
+    <value>Version:</value>
+    <comment/>
+  </data>
 </root>
