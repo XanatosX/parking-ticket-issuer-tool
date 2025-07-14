@@ -29,6 +29,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.7" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.0" Condition="'$(OS)' == 'UNIX'"/>
   </ItemGroup>
 
   
