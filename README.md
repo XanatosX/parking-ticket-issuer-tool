@@ -24,6 +24,8 @@ dotnet restore
 dotnet build -c Release
 ```
 
+After the build is done you can find the tool in the `bin/Release/net9.0/publish` folder. Execute the binary to start it.
+
 ## Installation
 
 1. Go to the [Releases][releases] page and download the latest release.
@@ -32,8 +34,6 @@ dotnet build -c Release
 4. Copy the content to a folder of your choice.
 5. Run the binary.
 
-
-After the build is done you can find the tool in the `bin/Release/net9.0/publish` folder. Execute the binary to start it.
 
 ### Libraries
 
