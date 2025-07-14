@@ -28,6 +28,10 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty]
     private ViewModelBase? currentMainViewModel;
+
+    [ObservableProperty]
+    private string applicationVersion;
+
     private readonly ILocatorService locatorService;
     private readonly SettingsService settingsService;
 
@@ -36,10 +40,12 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public ColorStyles ColorStyles { get; } = new ColorStyles();
 
-    public MainWindowViewModel(ILocatorService locatorService, SettingsService settingsService)
+    public MainWindowViewModel(ILocatorService locatorService, SettingsService settingsService, VersionService versionService)
     {
         this.locatorService = locatorService;
         this.settingsService = settingsService;
+
+        applicationVersion = versionService.GetVersion();
 
         var settings = settingsService.GetSettings();
         FeaturesActive = ValidateSettings(settings);

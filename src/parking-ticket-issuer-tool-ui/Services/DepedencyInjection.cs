@@ -8,6 +8,7 @@ public static class DependencyInjection
     {
         return services.AddSingleton<ILocatorService, MicrosoftLocatorService>()
                        .AddSingleton<SettingsService>()
-                       .AddSingleton<PathService>();
+                       .AddSingleton<PathService>()
+                       .AddSingleton<VersionService>();
     }
 }
