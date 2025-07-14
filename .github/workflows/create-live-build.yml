@@ -1,0 +1,108 @@
+name: Live Build
+
+on:
+  release:
+    types: [released]
+
+env:
+  DEBUG: false
+  REF_CHECKOUT_BRANCH: 'main'
+  RELEASE_ARTIFACTS_DIR: 'artifacts'
+  PROJECT_DIRECTORY: './src/parking-ticket-issuer-tool-ui\parking-ticket-issue-tool-ui.csproj'
+  ARTIFACT_NAME: 'ParkingTicketIssueTool'
+
+jobs:
+  build-version:
+    name: Get version for build
+    runs-on: ubuntu-latest
+    outputs:
+      build-version: ${{ steps.build-version.outputs.build-version }}
+    steps:
+      - name: Get release version
+        id: build-version
+        run: |
+         # Found at https://github.com/orgs/community/discussions/25713
+         # Additional env fix found on https://github.com/actions/runner-images/issues/5251
+         if [ '${{ GITHUB.REF_TYPE }}' == 'branch' ]
+            then
+                echo "Is not running on branch (Check failed)"
+                echo "build-version=0.0.0" >> $GITHUB_OUTPUT
+            else
+                echo "Running on branch (Check successful)"
+                echo "build-version=${{ GITHUB.REF_NAME }}" >> $GITHUB_OUTPUT
+         fi
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    needs: [build-version]
+    strategy:
+      matrix:
+        platform:
+          - name: windows-artifact
+            runtime: win-x64
+          - name: linux-artifact
+            runtime: linux-x64
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          lfs: true
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build Application
+        run: dotnet publish -r ${{ matrix.platform.runtime }} -c Release -o $RELEASE_ARTIFACTS_DIR -p:Version=${{ needs.build-version.outputs.build-version }}
+      - name: Show content for debug
+        if: ${{ env.DEBUG == 'true' }}
+        run: ls
+      - name: Show artifact content
+        if: ${{ env.DEBUG == 'true' }}
+        run: |
+          cd $RELEASE_ARTIFACTS_DIR
+          ls
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}_${{ matrix.platform.name }}
+          path: ${{ env.RELEASE_ARTIFACTS_DIR }}
+          if-no-files-found: error
+  upload-artifacts:
+    name: Upload artifacts to GitHub Release
+    runs-on: ubuntu-latest
+    needs: ["build", "build-version"]
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        platform:
+          - name: windows
+            artifact: windows-artifact
+          - name: linux
+            artifact: linux-artifact
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.REF_CHECKOUT_BRANCH }}
+          lfs: false
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with: 
+          name: ${{ env.ARTIFACT_NAME }}_${{ matrix.platform.artifact }}
+          path: ${{ env.RELEASE_ARTIFACTS_DIR }}
+      - name: Display artifacts folder content
+        if: ${{ env.DEBUG == 'true' }}
+        run: ls -la $RELEASE_ARTIFACTS_DIR
+      - name: Zip Build Files
+        run: |
+          cd ./$RELEASE_ARTIFACTS_DIR/
+          zip -r ${{ env.ARTIFACT_NAME }}_${{ matrix.platform.name }}.zip ./*
+      - name: Display artifacts folder content
+        if: ${{ env.DEBUG == 'true' }}
+        run: ls -la $RELEASE_ARTIFACTS_DIR
+      - name: Upload artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACTS_DIR }}/*.zip      
