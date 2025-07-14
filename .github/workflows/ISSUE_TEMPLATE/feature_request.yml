@@ -1,0 +1,34 @@
+name: Feature Request
+description: Request a new feature.
+title: "[Feature Request]: "
+labels: ["enhancement"]
+assignees:
+  - XanatosX
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature!
+  - type: textarea
+    id: whats-missing
+    attributes:
+      label: What's missing?
+      description: Tell us what you're missing!
+      placeholder: Tell us what you're missing!
+    validations:
+      required: true
+  - type: textarea
+    id: alternative-solution
+    attributes:
+      label: Is there any alternative for your feature?
+      placeholder: Can you think of any alternative solution?
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      placeholder: Add any other context about the problem here.
+    validations:
+      required: false
+
