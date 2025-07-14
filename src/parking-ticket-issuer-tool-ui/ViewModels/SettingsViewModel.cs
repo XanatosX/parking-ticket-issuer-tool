@@ -195,7 +195,7 @@ public partial class SettingsViewModel : ViewModelBase
         }
     }
 
-    public static ValidationResult ValidateImage(string path, ValidationContext context)
+    public static ValidationResult? ValidateImage(string path, ValidationContext context)
     {
         Bitmap? bitmap = null;
         using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))

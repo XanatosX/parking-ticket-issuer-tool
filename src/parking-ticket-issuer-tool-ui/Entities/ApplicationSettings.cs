@@ -12,5 +12,5 @@ public class ApplicationSettings
     public List<string> Sentences { get; set; } = new List<string>();
     public List<string> VehicleNames { get; set; } = new List<string>();
     
-    public String LastUsedOfficerName { get; set; } = string.Empty;
+    public string LastUsedOfficerName { get; set; } = string.Empty;
 }

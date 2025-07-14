@@ -97,7 +97,7 @@ jobs:
       - name: Zip Build Files
         run: |
           cd ./$RELEASE_ARTIFACTS_DIR/
-          zip -r ${{ env.ARTIFACT_NAME }}_${{ matrix.platform.name }}.zip ./*
+          zip -r ${{ env.ARTIFACT_NAME }}_${{ matrix.platform.name }}_${{ needs.build-version.outputs.build-version }}.zip ./*
       - name: Display artifacts folder content
         if: ${{ env.DEBUG == 'true' }}
         run: ls -la $RELEASE_ARTIFACTS_DIR
