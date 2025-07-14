@@ -12,16 +12,16 @@ namespace ParkingTicketIssuerToolUI.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private Brush parkingTicketForeground;
+    private Brush? parkingTicketForeground;
 
     [ObservableProperty]
-    private Brush parkingTicketBackground;
+    private Brush? parkingTicketBackground;
 
     [ObservableProperty]
-    private Brush settingsForeground;
+    private Brush? settingsForeground;
 
     [ObservableProperty]
-    private Brush settingsBackground;
+    private Brush? settingsBackground;
 
     [ObservableProperty]
     private bool featuresActive;

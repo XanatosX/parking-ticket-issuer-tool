@@ -22,25 +22,25 @@ public partial class ParkingTicketViewModel : ViewModelBase
     [Required(ErrorMessage = "Issuing officer name is required.")]
     [MinLength(3, ErrorMessage = "Issuing officer name must be at least 3 characters long.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
-    private string issuingOfficerName;
+    private string? issuingOfficerName;
 
     [ObservableProperty]
     [Required(ErrorMessage = "Driver name is required.")]
     [MinLength(3, ErrorMessage = "Driver name must be at least 3 characters long.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
-    private string driverName;
+    private string? driverName;
 
     [ObservableProperty]
     
     [Required(ErrorMessage = "Sentence is required.")]
     [MaxLength(100, ErrorMessage = "Sentence must be at most 100 characters long.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
-    private string sentence;
+    private string? sentence;
 
     [ObservableProperty]
     [Required(ErrorMessage = "Evidence file is required.")]
     [NotifyCanExecuteChangedFor(nameof(CreateTicketCommand))]
-    private string evidencePath;
+    private string? evidencePath;
 
     [ObservableProperty]
     private string? usedVehicleName;
@@ -52,19 +52,19 @@ public partial class ParkingTicketViewModel : ViewModelBase
     private string? additionalInformation;
 
     [ObservableProperty]
-    private List<string> issuingOfficers;
+    private List<string>? issuingOfficers;
 
     [ObservableProperty]
-    private List<string> possibleSentences;
+    private List<string>? possibleSentences;
 
     [ObservableProperty]
-    private List<string> locations;
+    private List<string>? locations;
 
     [ObservableProperty]
-    private List<string> driverNames;
+    private List<string>? driverNames;
 
     [ObservableProperty]
-    private List<string> vehicleNames;
+    private List<string>? vehicleNames;
 
     public ParkingTicketViewModel(CreateTicketPdfService createTicketPdfService, SettingsService settingsService)
     {
@@ -77,12 +77,30 @@ public partial class ParkingTicketViewModel : ViewModelBase
     {
         var settings = settingsService.GetSettings();
         IssuingOfficerName = settings.LastUsedOfficerName;
-        IssuingOfficers = settings.IssuingOfficers.Order().ToList();
+        IssuingOfficers = settings.IssuingOfficers.Where(entry => !string.IsNullOrEmpty(entry))
+                                                  .OfType<string>()
+                                                  .Order()
+                                                  .ToList();
 
-        DriverNames = settings.DriverNames.Order().ToList();
-        VehicleNames = settings.VehicleNames.Order().ToList();
-        Locations = settings.Locations.Order().ToList();
-        PossibleSentences = settings.Sentences.Order().ToList();
+        DriverNames = settings.DriverNames.Where(entry => !string.IsNullOrEmpty(entry))
+                                          .OfType<string>()
+                                          .Order()
+                                          .ToList();
+                                          
+        VehicleNames = settings.VehicleNames.Where(entry => !string.IsNullOrEmpty(entry))
+                                            .OfType<string>()
+                                            .Order()
+                                            .ToList();
+
+        Locations = settings.Locations.Where(entry => !string.IsNullOrEmpty(entry))
+                                      .OfType<string>()
+                                      .Order()
+                                      .ToList();
+
+        PossibleSentences = settings.Sentences.Where(entry => !string.IsNullOrEmpty(entry))
+                                              .OfType<string>()
+                                              .Order()
+                                              .ToList();
     }
 
     [RelayCommand]
@@ -122,10 +140,10 @@ public partial class ParkingTicketViewModel : ViewModelBase
             }
         });
         var settings = settingsService.GetSettings();
-        var data = new ParkingTicket(IssuingOfficerName,
-                                     DriverName,
-                                     Sentence,
-                                     EvidencePath,
+        var data = new ParkingTicket(IssuingOfficerName ?? string.Empty,
+                                     DriverName ?? string.Empty,
+                                     Sentence ?? string.Empty,
+                                     EvidencePath ?? string.Empty,
                                      DateOnly.FromDateTime(DateTime.Now),
                                      settings.LogoPath,
                                      UsedVehicleName,
@@ -134,14 +152,14 @@ public partial class ParkingTicketViewModel : ViewModelBase
 
         settingsService.UpdateSettings(data =>
         {
-            data.IssuingOfficers.Add(IssuingOfficerName);
+            data.IssuingOfficers.Add(IssuingOfficerName ?? string.Empty);
             data.IssuingOfficers = data.IssuingOfficers.Distinct().ToList();
-            data.LastUsedOfficerName = IssuingOfficerName;
+            data.LastUsedOfficerName = IssuingOfficerName ?? string.Empty;
 
-            data.DriverNames.Add(DriverName);
+            data.DriverNames.Add(DriverName ?? string.Empty);
             data.DriverNames = data.DriverNames.Distinct().ToList();
 
-            data.Sentences.Add(Sentence);
+            data.Sentences.Add(Sentence ?? string.Empty);
             data.Sentences = data.Sentences.Distinct().ToList();
 
             if (Location != null && !string.IsNullOrWhiteSpace(Location))
