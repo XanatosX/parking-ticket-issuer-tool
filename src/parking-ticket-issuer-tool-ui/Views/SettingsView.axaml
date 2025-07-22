@@ -25,17 +25,17 @@
           <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Resources.Setting_Logo_Path}" HorizontalAlignment="Right"/>
           <DockPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
             <Button Content="..." ToolTip.Tip="{x:Static p:Resources.Setting_Logo_Path_Selection_Tooltip}" DockPanel.Dock="Right" Command="{Binding OpenLogoFileCommand}"  VerticalAlignment="Top"/>
-            <TextBox Watermark="Path to the logo file" Text="{Binding LogoPath}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
+            <TextBox Watermark="{x:Static p:Resources.Setting_Logo_Path_Watermark}" Text="{Binding LogoPath}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
           </DockPanel>
 
 
           <!-- Format settings -->
-          <TextBlock Grid.Row="1" Grid.Column="0" Text="Format" Margin="0,0,0,10" VerticalAlignment="Center"/>
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static p:Resources.Settings_Format}" Margin="0,0,0,10" VerticalAlignment="Center"/>
           <DockPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
             <ComboBox ItemsSource="{Binding DateFormatConfigs}" SelectedItem="{Binding SelectedDateFormat}" HorizontalAlignment="Stretch" Margin="10,0,0,0"/>
           </DockPanel>
 
-          <TextBlock Grid.Row="2" Grid.Column="0" Text="Fate" Margin="0,0,0,10" VerticalAlignment="Center"/>
+          <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static p:Resources.Settings_Date}" Margin="0,0,0,10" VerticalAlignment="Center"/>
           <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ExampleDate}" Margin="10,0,0,0"  VerticalAlignment="Center"/>
 
           <!-- Setting 2

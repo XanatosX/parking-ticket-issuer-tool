@@ -233,4 +233,16 @@
     <value>Version:</value>
     <comment/>
   </data>
+  <data name="Settings_Date" xml:space="preserve">
+    <value>Date:</value>
+    <comment/>
+  </data>
+  <data name="Setting_Logo_Path_Watermark" xml:space="preserve">
+    <value>Path to the logo file</value>
+    <comment/>
+  </data>
+  <data name="Settings_Format" xml:space="preserve">
+    <value>Format:</value>
+    <comment/>
+  </data>
 </root>
