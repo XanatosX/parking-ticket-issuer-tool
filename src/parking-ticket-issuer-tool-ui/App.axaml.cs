@@ -22,9 +22,9 @@ public partial class App : Application
     private IServiceCollection BuildServiceCollection()
     {
         IServiceCollection collection = new ServiceCollection();
-        return collection.AddServices()
+        return collection.RegisterFramework()
+                         .AddServices()
                          .AddViews()
-                         .RegisterFramework()
                          .AddSingleton<ILogger>(NullLogger.Instance);
     }
 

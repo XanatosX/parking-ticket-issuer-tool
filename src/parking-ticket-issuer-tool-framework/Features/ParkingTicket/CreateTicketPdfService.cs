@@ -1,9 +1,11 @@
 using Microsoft.Extensions.Logging;
-using ParkingTicketIssuerToolFramework.Entities;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Markdown;
+using ParkingTicketIssuerToolFramework.Entities;
+
+namespace ParkingTicketIssuerToolFramework.Features.ParkingTicket;
 
 /// <summary>
 /// Service to create and save parking tickets as PDF documents.
@@ -23,7 +25,7 @@ public class CreateTicketPdfService
     /// </summary>
     /// <param name="ticket">The parking ticket to create a document for</param>
     /// <returns>The document if any was created or null if something went wrong</returns>
-    public Document? createTicketPdf(ParkingTicket ticket)
+    public Document? createTicketPdf(ParkingTicketData ticket)
     {
         return Document.Create(document =>
         {
@@ -107,7 +109,7 @@ public class CreateTicketPdfService
     /// <param name="ticket">The ticket data to create a document for</param>
     /// <param name="path">The path to save the result document o</param>
     /// <returns>The path to the PDF document if any was created, null if something gone wrong</returns>
-    public string? createAndSaveTicketPdf(ParkingTicket ticket, string path)
+    public string? createAndSaveTicketPdf(ParkingTicketData ticket, string path)
     {
         try
         {

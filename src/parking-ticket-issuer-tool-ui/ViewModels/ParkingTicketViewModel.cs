@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using ParkingTicketIssuerToolFramework.Entities;
+using ParkingTicketIssuerToolFramework.Features.ParkingTicket;
 using ParkingTicketIssuerToolUI.Entities.Messages;
 using ParkingTicketIssuerToolUI.Services;
 
@@ -140,15 +141,15 @@ public partial class ParkingTicketViewModel : ViewModelBase
             }
         });
         var settings = settingsService.GetSettings();
-        var data = new ParkingTicket(IssuingOfficerName ?? string.Empty,
-                                     DriverName ?? string.Empty,
-                                     Sentence ?? string.Empty,
-                                     EvidencePath ?? string.Empty,
-                                     DateOnly.FromDateTime(DateTime.Now),
-                                     settings.LogoPath,
-                                     UsedVehicleName,
-                                     Location,
-                                     AdditionalInformation);
+        var data = new ParkingTicketData(IssuingOfficerName ?? string.Empty,
+                                         DriverName ?? string.Empty,
+                                         Sentence ?? string.Empty,
+                                         EvidencePath ?? string.Empty,
+                                         DateOnly.FromDateTime(DateTime.Now),
+                                         settings.LogoPath,
+                                         UsedVehicleName,
+                                         Location,
+                                         AdditionalInformation);
 
         settingsService.UpdateSettings(data =>
         {
