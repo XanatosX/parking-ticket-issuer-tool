@@ -10,6 +10,7 @@ using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using ParkingTicketIssuerTool.Features.Shared;
 using ParkingTicketIssuerToolFramework.Features.Shared;
 using ParkingTicketIssuerToolUI.Entities.Messages;
 using ParkingTicketIssuerToolUI.Messages;
@@ -43,7 +44,7 @@ public partial class SettingsViewModel : ViewModelBase
     private List<DateFormatViewModel> dateFormatConfigs;
 
     [ObservableProperty]
-    private DateFormatViewModel selectedDateFormat = new(DateFormatConfig.Fallback);
+    private DateFormatViewModel? selectedDateFormat = null;
 
     [ObservableProperty]
     private string exampleDate = string.Empty;
@@ -51,14 +52,15 @@ public partial class SettingsViewModel : ViewModelBase
     public SettingsViewModel(
                             SettingsService settingsService,
                             IConfigSerializer<IEnumerable<DateFormatConfig>> dateFormatConfigSerializer,
-                            IDateFormatter dateFormatter)
+                            IDateFormatter dateFormatter,
+                            ITranslationService translationService)
     {
         LogoPath = settingsService.GetSettings().LogoPath;
         this.settingsService = settingsService;
         this.dateFormatConfigSerializer = dateFormatConfigSerializer;
         this.dateFormatter = dateFormatter;
-        DateFormatConfigs = dateFormatConfigSerializer.Deserialize()?.Select(data => new DateFormatViewModel(data)).ToList() ?? new List<DateFormatViewModel>();
-        SelectedDateFormat = DateFormatConfigs.FirstOrDefault(config => config.DateFormatConfig.Id == settingsService.GetSettings().FormatName) ?? new(DateFormatConfig.Fallback);
+        DateFormatConfigs = dateFormatConfigSerializer.Deserialize()?.Select(data => new DateFormatViewModel(data, translationService)).ToList() ?? new List<DateFormatViewModel>();
+        SelectedDateFormat = DateFormatConfigs.FirstOrDefault(config => config.DateFormatConfig.Id == settingsService.GetSettings().FormatName) ?? new(DateFormatConfig.Fallback, translationService);
         UpdateDate();
 
         PropertyChanged += (sender, args) =>

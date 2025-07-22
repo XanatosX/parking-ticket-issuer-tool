@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using ParkingTicketIssuerTool.Features.Shared;
 using ParkingTicketIssuerTool.Services;
 using ParkingTicketIssuerToolFramework.Features.Shared;
 using ParkingTicketIssuerToolUI.Services;
@@ -15,6 +15,7 @@ public static class DependencyInjection
                        .AddSingleton<PathService>()
                        .AddSingleton<VersionService>()
                        .AddSingleton<IConfigSerializer<IEnumerable<DateFormatConfig>>, DiscConfigSerializer>()
-                       .Replace(new ServiceDescriptor(typeof(IDateFormatter), typeof(CustomDateFormat), ServiceLifetime.Singleton));
+                       .Replace(new ServiceDescriptor(typeof(IDateFormatter), typeof(CustomDateFormat), ServiceLifetime.Singleton))
+                       .Replace(new ServiceDescriptor(typeof(ITranslationService), typeof(ResourceTranslationService), ServiceLifetime.Singleton));
     }
 }

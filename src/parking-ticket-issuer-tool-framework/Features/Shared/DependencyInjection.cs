@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using ParkingTicketIssuerTool.Features.Shared;
 
 namespace ParkingTicketIssuerToolFramework.Features.Shared;
 
@@ -14,6 +15,7 @@ public static class DependencyInjection
     /// <returns>The altered service collection</returns>
     public static IServiceCollection AddSharedDependencies(this IServiceCollection services)
     {
-        return services.AddSingleton<IDateFormatter, DefaultDateFormatter>();
+        return services.AddSingleton<IDateFormatter, DefaultDateFormatter>()
+                       .AddSingleton<ITranslationService, DefaultTranslationService>();
     }
 }
