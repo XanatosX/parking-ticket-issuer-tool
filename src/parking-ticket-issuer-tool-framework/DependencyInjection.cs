@@ -1,7 +1,7 @@
 namespace  ParkingTicketIssuerToolFramework;
 
 using Microsoft.Extensions.DependencyInjection;
-using ParkingTicketIssuerToolFramework.Features.ParkingTicket;
+using ParkingTicketIssuerToolFramework.Features;
 using QuestPDF.Drawing;
 using QuestPDF.Infrastructure;
 
@@ -14,7 +14,7 @@ public static class DependencyInjection
     public static IServiceCollection RegisterFramework(this IServiceCollection services)
     {
         SetupQuestPDF();
-        return services.AddParkingTicketFeature();
+        return services.RegisterFeatures();
     }
 
     private static void SetupQuestPDF()

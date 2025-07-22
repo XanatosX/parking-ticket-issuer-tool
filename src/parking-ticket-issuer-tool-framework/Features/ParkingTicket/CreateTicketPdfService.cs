@@ -1,9 +1,12 @@
 using Microsoft.Extensions.Logging;
-using ParkingTicketIssuerToolFramework.Entities;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Markdown;
+using ParkingTicketIssuerToolFramework.Entities;
+using ParkingTicketIssuerToolFramework.Features.Shared;
+
+namespace ParkingTicketIssuerToolFramework.Features.ParkingTicket;
 
 /// <summary>
 /// Service to create and save parking tickets as PDF documents.
@@ -12,10 +15,14 @@ using QuestPDF.Markdown;
 public class CreateTicketPdfService
 {
     private readonly ILogger logger;
+    private readonly IDateFormatter dateFormatter;
 
-    public CreateTicketPdfService(ILogger logger)
+
+    public CreateTicketPdfService(ILogger logger, IDateFormatter dateFormatter)
     {
         this.logger = logger;
+        this.dateFormatter = dateFormatter;
+
     }
 
     /// <summary>
@@ -23,10 +30,11 @@ public class CreateTicketPdfService
     /// </summary>
     /// <param name="ticket">The parking ticket to create a document for</param>
     /// <returns>The document if any was created or null if something went wrong</returns>
-    public Document? createTicketPdf(ParkingTicket ticket)
+    public Document? createTicketPdf(ParkingTicketData ticket)
     {
         return Document.Create(document =>
         {
+            string date = dateFormatter.FormatDate(ticket.issueDate);
             document.Page(page =>
             {
                 page.Size(PageSizes.A4);
@@ -77,10 +85,10 @@ public class CreateTicketPdfService
                         table.Cell().Text(vehicle);
 
                         table.Cell().Text("Date:");
-                        table.Cell().Text(ticket.issueDate.ToString());
+                        table.Cell().Text(date);
                     });
                     string location = ticket.location ?? "unknown location";
-                    x.Item().Markdown($"Officer **{ticket.issuingOfficer}** issued a parking ticket to **{ticket.driverName}** on **{ticket.issueDate}** for the vehicle **{vehicle}** at **{location}**");
+                    x.Item().Markdown($"Officer **{ticket.issuingOfficer}** issued a parking ticket to **{ticket.driverName}** on **{date}** for the vehicle **{vehicle}** at **{location}**");
                     x.Item().Text("Sentence").Bold();
                     x.Item().Text(ticket.sentence);
                     if (ticket.additionalInformation != null)
@@ -96,7 +104,7 @@ public class CreateTicketPdfService
                     }
                 });
 
-                page.Footer().AlignCenter().Markdown($"Issued by **{ticket.issuingOfficer}** on **{ticket.issueDate}**");
+                page.Footer().AlignCenter().Markdown($"Issued by **{ticket.issuingOfficer}** on **{date}**");
             });
         });
     }
@@ -107,7 +115,7 @@ public class CreateTicketPdfService
     /// <param name="ticket">The ticket data to create a document for</param>
     /// <param name="path">The path to save the result document o</param>
     /// <returns>The path to the PDF document if any was created, null if something gone wrong</returns>
-    public string? createAndSaveTicketPdf(ParkingTicket ticket, string path)
+    public string? createAndSaveTicketPdf(ParkingTicketData ticket, string path)
     {
         try
         {

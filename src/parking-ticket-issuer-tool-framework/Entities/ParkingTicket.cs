@@ -12,7 +12,7 @@ namespace ParkingTicketIssuerToolFramework.Entities;
 /// <param name="usedVehicleName">The Name of the vehicle which was used</param>
 /// <param name="location">The location this ticket was created for</param>
 /// <param name="additionalInformation">Any additional information</param>
-public record ParkingTicket(
+public record ParkingTicketData(
     string issuingOfficer,
     string driverName,
     string sentence,

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using ParkingTicketIssuerToolFramework.Features.ParkingTicket;
+using ParkingTicketIssuerToolFramework.Features.Shared;
 
 namespace ParkingTicketIssuerToolFramework.Features;
 
@@ -14,6 +15,7 @@ public static class DependencyInjection
     /// <param name="services">The service collection to register services into.</param>
     public static IServiceCollection RegisterFeatures(this IServiceCollection services)
     {
-        return services.AddParkingTicketFeature();
+        return services.AddSharedDependencies()
+                       .AddParkingTicketFeature();
     }
 }
