@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media.Imaging;
@@ -9,6 +10,7 @@ using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using ParkingTicketIssuerToolFramework.Features.Shared;
 using ParkingTicketIssuerToolUI.Entities.Messages;
 using ParkingTicketIssuerToolUI.Messages;
 using ParkingTicketIssuerToolUI.Services;
@@ -18,7 +20,8 @@ namespace ParkingTicketIssuerToolUI.ViewModels;
 public partial class SettingsViewModel : ViewModelBase
 {
     private readonly SettingsService settingsService;
-
+    private readonly IConfigSerializer<IEnumerable<DateFormatConfig>> dateFormatConfigSerializer;
+    private readonly IDateFormatter dateFormatter;
     [ObservableProperty]
     [Required(ErrorMessage = "Logo path is required.")]
     [CustomValidation(typeof(SettingsViewModel), nameof(ValidateImage))]
@@ -36,10 +39,49 @@ public partial class SettingsViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(ClearVehicleNamesCommand))]
     private bool updateClearButtons = true;
 
-    public SettingsViewModel(SettingsService settingsService)
+    [ObservableProperty]
+    private List<DateFormatViewModel> dateFormatConfigs;
+
+    [ObservableProperty]
+    private DateFormatViewModel selectedDateFormat = new(DateFormatConfig.Fallback);
+
+    [ObservableProperty]
+    private string exampleDate = string.Empty;
+
+    public SettingsViewModel(
+                            SettingsService settingsService,
+                            IConfigSerializer<IEnumerable<DateFormatConfig>> dateFormatConfigSerializer,
+                            IDateFormatter dateFormatter)
     {
         LogoPath = settingsService.GetSettings().LogoPath;
         this.settingsService = settingsService;
+        this.dateFormatConfigSerializer = dateFormatConfigSerializer;
+        this.dateFormatter = dateFormatter;
+        DateFormatConfigs = dateFormatConfigSerializer.Deserialize()?.Select(data => new DateFormatViewModel(data)).ToList() ?? new List<DateFormatViewModel>();
+        SelectedDateFormat = DateFormatConfigs.FirstOrDefault(config => config.DateFormatConfig.Id == settingsService.GetSettings().FormatName) ?? new(DateFormatConfig.Fallback);
+        UpdateDate();
+
+        PropertyChanged += (sender, args) =>
+        {
+            if (args.PropertyName == nameof(SelectedDateFormat))
+            {
+
+                UpdateDate();
+            }
+        };
+    }
+
+    private void UpdateDate(DateFormatConfig dateFormatConfig)
+    {
+        var date = DateOnly.FromDateTime(DateTime.UtcNow);
+        ExampleDate = dateFormatConfig.Format.Replace("{DAY}", date.Day.ToString("00"))
+                                             .Replace("{MONTH}", date.Month.ToString("00"))
+                                             .Replace("{YEAR}", date.Year.ToString("00"));
+    }
+
+    private void UpdateDate()
+    {
+        UpdateDate(SelectedDateFormat.DateFormatConfig);
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveSettings))]
@@ -48,6 +90,7 @@ public partial class SettingsViewModel : ViewModelBase
         settingsService.UpdateSettings(settings =>
         {
             settings.LogoPath = LogoPath;
+            settings.FormatName = SelectedDateFormat.DateFormatConfig.Id;
         });
 
         WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(settingsService.GetSettings()));

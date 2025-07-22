@@ -1,0 +1,14 @@
+[
+    {
+        "id": "DEFAULT",
+        "display_name": "EUROPEAN_FORMAT",
+        "fallback_display_name": "European",
+        "format": "{DAY}.{MONTH}.{YEAR}"
+    },
+    {
+        "id": "US_FORMAT",
+        "display_name": "DATE_FORMAT_US",
+        "fallback_display_name": "US",
+        "format": "{MONTH}/{DAY}/{YEAR}"
+    }
+]

@@ -14,4 +14,9 @@ public class PathService
         }
         return returnPath;
     }
+
+    public string GetResourcesDirectory()
+    {
+        return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+    }
 }

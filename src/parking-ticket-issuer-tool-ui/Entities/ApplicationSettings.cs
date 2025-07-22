@@ -11,6 +11,7 @@ public class ApplicationSettings
     public List<string> Locations { get; set; } = new List<string>();
     public List<string> Sentences { get; set; } = new List<string>();
     public List<string> VehicleNames { get; set; } = new List<string>();
-    
+
     public string LastUsedOfficerName { get; set; } = string.Empty;
+    public string FormatName { get; set; } = "DEFAULT";
 }

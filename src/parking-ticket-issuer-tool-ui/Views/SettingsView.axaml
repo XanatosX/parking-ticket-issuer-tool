@@ -28,6 +28,16 @@
             <TextBox Watermark="Path to the logo file" Text="{Binding LogoPath}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
           </DockPanel>
 
+
+          <!-- Format settings -->
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Format" Margin="0,0,0,10" VerticalAlignment="Center"/>
+          <DockPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
+            <ComboBox ItemsSource="{Binding DateFormatConfigs}" SelectedItem="{Binding SelectedDateFormat}" HorizontalAlignment="Stretch" Margin="10,0,0,0"/>
+          </DockPanel>
+
+          <TextBlock Grid.Row="2" Grid.Column="0" Text="Fate" Margin="0,0,0,10" VerticalAlignment="Center"/>
+          <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ExampleDate}" Margin="10,0,0,0"  VerticalAlignment="Center"/>
+
           <!-- Setting 2
           <Label Grid.Row="1" Grid.Column="0" Content="Setting 2" HorizontalAlignment="Right"/>
           <TextBox Grid.Row="1" Grid.Column="1" Text="Value 2" Margin="10,0,0,0"/>

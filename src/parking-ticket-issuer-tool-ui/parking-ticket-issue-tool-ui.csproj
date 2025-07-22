@@ -32,6 +32,9 @@
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.0" Condition="'$(OS)' == 'UNIX'"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources/date-formats.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\parking-ticket-issuer-tool-framework\parking-ticket-issuer-model-framework.csproj" />
