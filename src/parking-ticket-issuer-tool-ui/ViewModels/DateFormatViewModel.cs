@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using ParkingTicketIssuerTool.Features.Shared;
 
 namespace ParkingTicketIssuerToolUI.ViewModels;
 
@@ -12,10 +13,10 @@ public partial class DateFormatViewModel : ViewModelBase
     [ObservableProperty]
     private string format;
 
-    public DateFormatViewModel(DateFormatConfig dateFormatConfig)
+    public DateFormatViewModel(DateFormatConfig dateFormatConfig, ITranslationService translationService)
     {
         DateFormatConfig = dateFormatConfig;
-        displayName = DateFormatConfig.DisplayName;
+        displayName = translationService.Translate(DateFormatConfig.DisplayName);
         if (displayName == DateFormatConfig.DisplayName)
         {
             displayName = DateFormatConfig.FallbackDisplayName;

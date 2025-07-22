@@ -245,4 +245,60 @@
     <value>Format:</value>
     <comment/>
   </data>
+  <data name="Framework_Parking_Ticket" xml:space="preserve">
+    <value>Parking Ticket</value>
+    <comment/>
+  </data>
+  <data name="Framework_Unknown_Vehicle" xml:space="preserve">
+    <value>unknown</value>
+    <comment/>
+  </data>
+  <data name="Framework_Issuer" xml:space="preserve">
+    <value>Issuer:</value>
+    <comment/>
+  </data>
+  <data name="Framework_Driver" xml:space="preserve">
+    <value>Driver:</value>
+    <comment/>
+  </data>
+  <data name="Framework_Vehicle" xml:space="preserve">
+    <value>Vehicle:</value>
+    <comment/>
+  </data>
+  <data name="Framework_Date" xml:space="preserve">
+    <value>Date:</value>
+    <comment/>
+  </data>
+  <data name="Framework_Unknown_Location" xml:space="preserve">
+    <value>unknown location</value>
+    <comment/>
+  </data>
+  <data name="Framework_Officer_Issued_Ticket" xml:space="preserve">
+    <value>Officer **{0}** issued a parking ticket to **{1}** on **{2}** for the vehicle **{3}** at **{4}**</value>
+    <comment/>
+  </data>
+  <data name="Framework_Sentence" xml:space="preserve">
+    <value>Sentence</value>
+    <comment/>
+  </data>
+  <data name="Framework_Additional_Information" xml:space="preserve">
+    <value>Additional Information</value>
+    <comment/>
+  </data>
+  <data name="Framework_Please_Check_Next_Page" xml:space="preserve">
+    <value>Please check the next page for evidence.</value>
+    <comment/>
+  </data>
+  <data name="Framework_Issued_By" xml:space="preserve">
+    <value>Issued by **{0}** on **{1}**</value>
+    <comment/>
+  </data>
+  <data name="Date_Format_European" xml:space="preserve">
+    <value>European</value>
+    <comment/>
+  </data>
+  <data name="Date_Format_Us" xml:space="preserve">
+    <value>US</value>
+    <comment/>
+  </data>
 </root>
