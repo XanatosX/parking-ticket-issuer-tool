@@ -7,8 +7,6 @@ This tool does allow you to create parking tickets, this tool should be used for
 - Dotnet 9.0
 - Windows / Linux
 
-## Used Libraries and Assets
-
 ## Create from source
 
 ### Requirements
@@ -35,11 +33,19 @@ After the build is done you can find the tool in the `bin/Release/net9.0/publish
 5. Run the binary.
 
 
+
+## Used Libraries and Assets
+
 ### Libraries
 
 - [Avalonia][avalonia]
 - [QuestPDF][quest-pdf]
 - [QuestPDF.Markdown][quest-pdf-markdown]
+
+#### QuestPDF License
+
+Keep in mind that the QuestPDF license is only free if the application is open source.
+If you do use it for any project used commercial you will need to pay for a proper one.
 
 ### Assets
 
