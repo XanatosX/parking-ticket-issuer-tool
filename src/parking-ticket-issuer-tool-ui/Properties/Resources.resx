@@ -301,4 +301,16 @@
     <value>US</value>
     <comment/>
   </data>
+  <data name="Error_Logo_Not_Square" xml:space="preserve">
+    <value>Logo must be a square image with a maximum size of 250x250 pixels.</value>
+    <comment/>
+  </data>
+  <data name="Error_Logo_Path_Not_Existing" xml:space="preserve">
+    <value>Provided path does not exist.</value>
+    <comment/>
+  </data>
+  <data name="Error_Could_Not_Load_Logo" xml:space="preserve">
+    <value>Could not load image. Please select a valid image file.</value>
+    <comment/>
+  </data>
 </root>
