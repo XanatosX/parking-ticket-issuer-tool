@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -243,6 +242,10 @@ public partial class SettingsViewModel : ViewModelBase
     public static ValidationResult? ValidateImage(string path, ValidationContext context)
     {
         Bitmap? bitmap = null;
+        if (!File.Exists(path))
+        {
+            return new(Properties.Resources.Error_Logo_Path_Not_Existing);
+        }
         using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
         {
             try
@@ -252,7 +255,7 @@ public partial class SettingsViewModel : ViewModelBase
             catch (Exception)
             {
                 // Handle exceptions related to invalid image formats
-                return new("Could not load image. Please select a valid image file.");
+                return new(Properties.Resources.Error_Could_Not_Load_Logo);
             }
         }
         var isValid = bitmap.Size.Width == bitmap.Size.Height && bitmap.Size.Width <= 250;
@@ -264,6 +267,6 @@ public partial class SettingsViewModel : ViewModelBase
                 viewModel.isLogoValid = true;
             }
         }
-        return isValid ? ValidationResult.Success : new("Logo must be a square image with a maximum size of 250x250 pixels.");
+        return isValid ? ValidationResult.Success : new(Properties.Resources.Error_Logo_Not_Square); 
     }
 }
