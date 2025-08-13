@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using ParkingTicketIssuerToolUI.Entities.Messages;
 
@@ -21,23 +22,30 @@ public partial class MainWindow : Window
             {
                 return;
             }
-            Task<List<string>> task = Task.Run(async () =>
-            {
-                var topLevel = GetTopLevel(this);
-                if (topLevel == null || topLevel.StorageProvider == null)
+                Task<List<string>> task = Task.Run(async () =>
                 {
-                    return new List<string>();
-                }
-                var files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
-                {
-                    AllowMultiple = m.AllowMultiple,
-                    Title = m.Title,
-                    FileTypeFilter = m.Filters
+                    var topLevel = GetTopLevel(this);
+                    if (topLevel == null || topLevel.StorageProvider == null)
+                    {
+                        return new List<string>();
+                    }
+
+                    var files = await Dispatcher.UIThread.InvokeAsync(async () =>
+                        {
+                            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+                            {
+                                AllowMultiple = m.AllowMultiple,
+                                Title = m.Title,
+                                FileTypeFilter = m.Filters
+                            });
+
+                            return files;
+
+                        });
+
+                    return files.Select(file => file.Path.AbsolutePath).ToList();
+
                 });
-
-                return files.Select(file => file.Path.AbsolutePath).ToList();
-
-            });
 
 
             m.Reply(task);
